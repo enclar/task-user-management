@@ -18,6 +18,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
@@ -77,8 +78,8 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
         createdDateTime = new DateTimePicker("Date & Time Created");
         createdDateTime.setValue(LocalDateTime.now());
         taskState = getTaskStateField();
-        createdBy = getUserSelect("Created By", userController, 0);
-        assignedTo = getUserSelect("Assigned To", userController, 1);
+        createdBy = getUserSelect("Created By", userController);
+        assignedTo = getUserSelect("Assigned To", userController);
         shortDescription = new TextField("Short Description");
         description = new TextField("Description");
         errorMessage = new Span();
@@ -90,6 +91,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
             taskState,
             createdBy,
             assignedTo,
+            shortDescription,
             description,
             errorMessage
         );
@@ -97,28 +99,28 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
             new ResponsiveStep("0", 1),
             new ResponsiveStep("500px", 2)
         );
+        taskFormLayout.setColspan(shortDescription, 2);
         taskFormLayout.setColspan(description, 2);
         taskFormLayout.setColspan(errorMessage, 2);
         taskFormLayout.setWidth("50rem");
 
+        HorizontalLayout buttonWrapper = new HorizontalLayout();
         Button saveButton = new Button("Update");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Button backButton = new Button("Back");
+        backButton.addClickListener(e -> {
+            UI.getCurrent().navigate("tasks");
+        });
+        buttonWrapper.add(saveButton, backButton);
 
         //! Wrap the form title, form layout, and button in a new VerticalLayout
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setWidth("50rem");
         contentLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        contentLayout.add(newTaskFormTitle, taskFormLayout, saveButton);
+        contentLayout.add(newTaskFormTitle, taskFormLayout, buttonWrapper);
 
         //! form binder
         taskBinder = new Binder<Task>(Task.class);
-
-        // taskBinder.forField(createdDateTime).asRequired().bind("createdDateTime");
-        // taskBinder.forField(taskState).asRequired().bind("state");
-        // taskBinder.forField(createdBy).asRequired().bind("createdBy");
-        // taskBinder.forField(assignedTo).asRequired().bind("assignedTo");
-        // taskBinder.forField(description).asRequired().bind("description");
 
         taskBinder.setStatusLabel(errorMessage);
 
@@ -126,7 +128,6 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
         saveButton.addClickListener(e -> {
             if (taskBinder.validate().isOk()) {
                 try {
-                    // Task taskBean = new Task();
                     taskBinder.writeBean(taskBean);
                     taskController.createTask(taskBean);
 
@@ -135,7 +136,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
                     successNotification.setPosition(Notification.Position.TOP_CENTER);
                     successNotification.setDuration(2000);
 
-                    UI.getCurrent().navigate("users");
+                    UI.getCurrent().navigate("tasks");
                 } catch (ValidationException e1) {
                     log.error("Validation error", e1);
                     Notification errorNotification = Notification.show("Error creating task, please try again!");
@@ -162,14 +163,12 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
 
     private Select<User> getUserSelect(
         String label,
-        UserController userController,
-        Integer index
+        UserController userController
     ) {
         Select<User> userSelect = new Select<>();
         userSelect.setLabel(label);
         List<User> users = Lists.newArrayList(userController.findAllUsers());
         userSelect.setItems(users);userSelect.setRenderer(new TextRenderer<>(user -> user.getFirstName() + " " + user.getLastName()));
-        userSelect.setValue(users.get(index));
         return userSelect;
     }
 
@@ -206,26 +205,31 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
     private void setupBinder() {
         taskBinder.forField(createdDateTime).asRequired().bind("createdDateTime").setReadOnly(true);
         taskBinder.forField(taskState).asRequired().bind("state");
-        taskBinder.forField(createdBy).asRequired()
-            // .withConverter(
-            //     new AbstractConverter<String, User>() {
-            //         @Override
-            //         protected User convertToModel(String value, ValueContext context) {
-            //             // This method is called when saving the form
-            //             // You might need to implement this based on your requirements
-            //             return null; // or find the User by name/username
-            //         }
-        
-            //         @Override
-            //         protected String convertToPresentation(User user, ValueContext context) {
-            //             // This method is called when loading the form
-            //             return user != null ? user.getName() : "";
-            //         }
-            //     }
-            // )
-            .bind("createdBy");
-        taskBinder.forField(assignedTo).asRequired().bind("assignedTo");
+        taskBinder.forField(createdBy).asRequired().bind(
+            task -> findCreatedByUserInList(task.getCreatedBy()),
+            (task, user) -> task.setCreatedBy(user)
+        );
+        taskBinder.forField(assignedTo).asRequired().bind(
+            task -> findAssignedToUserInList(task.getAssignedTo()),
+            (task, user) -> task.setAssignedTo(user)
+        );
         taskBinder.forField(shortDescription).asRequired().bind("shortDescription");
         taskBinder.forField(description).bind("description");
+    }
+
+    private User findCreatedByUserInList(User user) {
+        if (user == null) return null;
+        return createdBy.getListDataView().getItems()
+            .filter(u -> u.getId().equals(user.getId()))
+            .findFirst()
+            .orElse(null);
+    }
+
+    private User findAssignedToUserInList(User user) {
+        if (user == null) return null;
+        return assignedTo.getListDataView().getItems()
+            .filter(u -> u.getId().equals(user.getId()))
+            .findFirst()
+            .orElse(null);
     }
 }

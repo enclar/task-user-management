@@ -90,15 +90,17 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
         HorizontalLayout buttonWrapper = new HorizontalLayout();
         Button saveButton = new Button("Update");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Button backButton = new Button("back");
-
-        buttonWrapper.add(saveButton);
+        Button backButton = new Button("Back");
+        backButton.addClickListener(e -> {
+            UI.getCurrent().navigate("users");
+        });
+        buttonWrapper.add(saveButton, backButton);
 
         //! Wrap the form title, form layout, and button in a new VerticalLayout
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setWidth("50rem");
         contentLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        contentLayout.add(newUserFormTitle, userFormLayout, saveButton);
+        contentLayout.add(newUserFormTitle, userFormLayout, buttonWrapper);
 
         //! form binder
         userBinder = new Binder<User>(User.class);

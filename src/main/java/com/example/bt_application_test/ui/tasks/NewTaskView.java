@@ -153,7 +153,8 @@ public class NewTaskView extends VerticalLayout {
         Select<User> userSelect = new Select<>();
         userSelect.setLabel(label);
         List<User> users = Lists.newArrayList(userController.findAllUsers());
-        userSelect.setItems(users);userSelect.setRenderer(new TextRenderer<>(user -> user.getFirstName() + " " + user.getLastName()));
+        userSelect.setItems(users);
+        userSelect.setRenderer(new TextRenderer<>(user -> user.getFirstName() + " " + user.getLastName()));
         userSelect.setValue(users.get(index));
         return userSelect;
     }

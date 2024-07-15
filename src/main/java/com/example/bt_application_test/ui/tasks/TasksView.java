@@ -59,6 +59,7 @@ public class TasksView extends Div {
             },
             "Assigned To"
         );
+        addColumn(taskGrid, Task::getShortDescription, "Short Description");
         addColumn(taskGrid, Task::getDescription, "Description");
         addColumn(taskGrid, task -> task.getState().getDisplayName(), "State");
         taskGrid.addColumn(
