@@ -1,0 +1,22 @@
+.side-nav__router-link {
+    padding: 0.5rem 1rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main-layout__page-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.main-nav__page-name {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.table {
+    border: none !important;
+}
