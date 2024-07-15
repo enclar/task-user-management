@@ -24,6 +24,8 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "new-user", layout = MainLayout.class)
 @PageTitle("New User")
 @CssImport("./styles/shared-styles.css")
+@PermitAll
 public class NewUserView extends VerticalLayout {
     public static final String VIEW_NAME = "New User";
     private static final Logger log = LoggerFactory.getLogger(UserService.class);

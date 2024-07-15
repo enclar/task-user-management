@@ -1,14 +1,4 @@
--- INSERT INTO users (id, first_name, last_name, email_address, password, user_role) VALUES
--- ('e4b69db2-b4d8-4f7a-bc7b-2c474d8427a7', 'Michael', 'Smith', 'michael.smith@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('adb9f254-2a23-4b49-88f6-03f6bbec6375', 'Emily', 'Johnson', 'emily.johnson@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'Admin'),
--- ('a689b19f-6c6e-44ef-95e1-c631a4d5375e', 'Jessica', 'Williams', 'jessica.williams@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('1db19361-b439-470d-bb11-b28d4a449f32', 'Matthew', 'Jones', 'matthew.jones@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('bf5cc36d-cf24-469b-9955-e05538e28af1', 'Emma', 'Brown', 'emma.brown@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('b6d4351c-7392-4e8c-a16a-50c4b178f0a8', 'Daniel', 'Garcia', 'daniel.garcia@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'Admin'),
--- ('402f6638-5f5e-44d4-baa1-d248da6c8967', 'Olivia', 'Martinez', 'olivia.martinez@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('aa649fc1-2a40-4d17-8311-8aab1e631383', 'William', 'Rodriguez', 'william.rodriguez@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('5bde3ad5-14ea-445b-abe3-28039a482b78', 'Sophia', 'Wilson', 'sophia.wilson@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),
--- ('7bc9ff7d-2ac1-4c33-8db6-54ff8b8c2dbe', 'James', 'Lopez', 'james.lopez@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'Admin');
+
 
 INSERT INTO users (first_name, last_name, email_address, password, user_role) VALUES
 ('Michael', 'Smith', 'michael.smith@example.com', '$2y$10$nxwMYLBpR8qg9m46HEG4au7C8KrteE7VlQnBB7H5zLVqOR7P32c46', 'User'),

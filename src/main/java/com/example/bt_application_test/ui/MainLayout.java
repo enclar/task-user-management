@@ -14,11 +14,10 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 
 @CssImport("./styles/shared-styles.css")
-public class MainLayout extends AppLayout implements RouterLayout {
+public class MainLayout extends AppLayout {
 
     private Button logoutButton;
     private H1 pageTitle;

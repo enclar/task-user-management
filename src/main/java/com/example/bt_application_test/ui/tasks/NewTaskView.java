@@ -26,6 +26,8 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,6 +39,7 @@ import com.google.common.collect.Lists;
 @Route(value = "new-task", layout = MainLayout.class)
 @PageTitle("New Task")
 @CssImport("./styles/shared-styles.css")
+@PermitAll
 public class NewTaskView extends VerticalLayout {
     public static final String VIEW_NAME = "New Task";
     private static final Logger log = LoggerFactory.getLogger(UserService.class);

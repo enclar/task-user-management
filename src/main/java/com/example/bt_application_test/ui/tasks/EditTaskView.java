@@ -23,12 +23,13 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.binder.ValueContext;
 import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import jakarta.annotation.security.PermitAll;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,6 +42,7 @@ import com.google.common.collect.Lists;
 @Route(value = "edit-task/:taskId(\\d+)", layout = MainLayout.class)
 @PageTitle("Edit Task")
 @CssImport("./styles/shared-styles.css")
+@PermitAll
 public class EditTaskView extends VerticalLayout implements BeforeEnterObserver {
     public static final String VIEW_NAME = "Edit Task";
     private static final Logger log = LoggerFactory.getLogger(UserService.class);

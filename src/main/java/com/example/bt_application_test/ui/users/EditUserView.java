@@ -29,6 +29,8 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,7 @@ import java.util.List;
 @Route(value = "edit-user/:userId(\\d+)", layout = MainLayout.class)
 @PageTitle("Edit User")
 @CssImport("./styles/shared-styles.css")
+@PermitAll
 public class EditUserView extends VerticalLayout implements BeforeEnterObserver {
     public static final String VIEW_NAME = "Edit User";
     private static final Logger log = LoggerFactory.getLogger(UserService.class);

@@ -21,11 +21,16 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
+
+import jakarta.annotation.security.PermitAll;
 
 import java.util.List;
 
 @Route(value = "users", layout = MainLayout.class)
+@RouteAlias(value = "", layout = MainLayout.class)
 @PageTitle("Users")
+@PermitAll
 public class UsersView extends Div {
     public static final String VIEW_NAME = "Users";
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -41,7 +46,7 @@ public class UsersView extends Div {
         addColumn(userGrid, User::getLastName, "Last Name");
         addColumn(userGrid, User::getEmailAddress, "Email Address");
         addColumn(userGrid, User::getPassword, "Password");
-        addColumn(userGrid, User::getUserRole, "User Role");
+        addColumn(userGrid, User::getUserRoles, "User Role");
         userGrid.addColumn(
             new ComponentRenderer<HorizontalLayout, User>(
                 HorizontalLayout::new,

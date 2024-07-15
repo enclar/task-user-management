@@ -18,11 +18,14 @@ import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Route(value = "tasks", layout = MainLayout.class)
 @PageTitle("Tasks")
+@PermitAll
 public class TasksView extends Div {
     public static final String VIEW_NAME = "Tasks";
 
