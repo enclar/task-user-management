@@ -61,6 +61,7 @@ public class NewTaskView extends VerticalLayout {
         Select<TaskStateEnum> taskState = getTaskStateField();
         Select<User> createdBy = getUserSelect("Created By", userController, 0);
         Select<User> assignedTo = getUserSelect("Assigned To", userController, 1);
+        TextField shortDescription = new TextField("Short Description");
         TextField description = new TextField("Description");
         Span errorMessage = new Span();
 
@@ -71,6 +72,7 @@ public class NewTaskView extends VerticalLayout {
             taskState,
             createdBy,
             assignedTo,
+            shortDescription,
             description,
             errorMessage
         );
@@ -78,6 +80,7 @@ public class NewTaskView extends VerticalLayout {
             new ResponsiveStep("0", 1),
             new ResponsiveStep("500px", 2)
         );
+        taskFormLayout.setColspan(shortDescription, 2);
         taskFormLayout.setColspan(description, 2);
         taskFormLayout.setColspan(errorMessage, 2);
         taskFormLayout.setWidth("50rem");
@@ -98,7 +101,8 @@ public class NewTaskView extends VerticalLayout {
         taskBinder.forField(taskState).asRequired().bind("state");
         taskBinder.forField(createdBy).asRequired().bind("createdBy");
         taskBinder.forField(assignedTo).asRequired().bind("assignedTo");
-        taskBinder.forField(description).asRequired().bind("description");
+        taskBinder.forField(shortDescription).asRequired().bind("shortDescription");
+        taskBinder.forField(description).bind("description");
 
         taskBinder.setStatusLabel(errorMessage);
 
@@ -137,7 +141,7 @@ public class NewTaskView extends VerticalLayout {
         taskStateSelect.setLabel("State");
         taskStateSelect.setItems(TaskStateEnum.values());
         taskStateSelect.setRenderer(new TextRenderer<>(TaskStateEnum::getDisplayName));
-        taskStateSelect.setValue(TaskStateEnum.New);
+        taskStateSelect.setValue(TaskStateEnum.NEW);
         return taskStateSelect;
     }
 

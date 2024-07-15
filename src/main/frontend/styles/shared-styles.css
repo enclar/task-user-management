@@ -12,11 +12,34 @@
     font-weight: bold;
 }
 
+.main-nav__title-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .main-nav__page-name {
     font-size: 1rem;
     font-weight: bold;
+    line-height: 1;
 }
 
-.table {
+.main-nav__logout-btn {
+    margin-right: 1rem;
+}
+
+.side-nav__page-name {
+    padding: 1.25rem 1.5rem;
+
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.side-nav__tab-wrapper {
+    padding: 0.5rem;
+}
+
+table {
     border: none !important;
 }

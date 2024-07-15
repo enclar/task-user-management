@@ -35,17 +35,6 @@ public class SecurityConfiguration extends VaadinWebSecurity {
         http.authenticationProvider(authenticationProvider());
 
         super.configure(http);
-
         setLoginView(http, LoginView.class);
     }
-
-    // @Override
-    // public void configure(WebSecurity web) throws Exception {
-    //     super.configure(web);
-    //     web.ignoring().requestMatchers(
-    //         "/images/**",
-    //         "/icons/**",
-    //         "/VAADIN/**"
-    //     );
-    // }
 }

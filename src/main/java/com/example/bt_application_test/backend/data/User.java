@@ -2,8 +2,12 @@ package com.example.bt_application_test.backend.data;
 
 import java.io.Serializable;
 
+import com.example.bt_application_test.backend.enums.UserRoleEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,7 +38,8 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "user_role", nullable = false)
-    private String userRoles;
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum userRole;
 
     public User() {
     }
@@ -44,12 +49,12 @@ public class User implements Serializable {
         String lastName,
         String emailAddress,
         String password,
-        String userRoles
+        UserRoleEnum userRole
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.password = password;
-        this.userRoles = userRoles;
+        this.userRole = userRole;
     }
 }

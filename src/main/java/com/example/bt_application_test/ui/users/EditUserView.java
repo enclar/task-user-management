@@ -17,10 +17,10 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -49,7 +49,6 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
     private TextField firstName;
     private TextField lastName;
     private EmailField emailAddress;
-    private PasswordField password;
     private Select<UserRoleEnum> userRole;
     private Binder<User> userBinder;
     private User userBean;
@@ -69,7 +68,6 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
         firstName = new TextField("First Name");
         lastName = new TextField("Last Name");
         emailAddress = getEmailField();
-        password = new PasswordField("Password");
         userRole = getUserRoleField();
         Span errorMessage = new Span();
 
@@ -79,7 +77,6 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
             firstName,
             lastName,
             emailAddress,
-            password,
             userRole,
             errorMessage
         );
@@ -90,8 +87,12 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
         );
         userFormLayout.setWidth("50rem");
 
+        HorizontalLayout buttonWrapper = new HorizontalLayout();
         Button saveButton = new Button("Update");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Button backButton = new Button("back");
+
+        buttonWrapper.add(saveButton);
 
         //! Wrap the form title, form layout, and button in a new VerticalLayout
         VerticalLayout contentLayout = new VerticalLayout();
@@ -143,7 +144,7 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
         Select<UserRoleEnum> userRoleSelect = new Select<>();
         userRoleSelect.setLabel("User Role");
         userRoleSelect.setItems(UserRoleEnum.values());
-        userRoleSelect.setValue(UserRoleEnum.User);
+        userRoleSelect.setValue(UserRoleEnum.USER);
         return userRoleSelect;
     }
 
@@ -180,20 +181,7 @@ public class EditUserView extends VerticalLayout implements BeforeEnterObserver 
     private void setupBinder() {
         userBinder.forField(firstName).asRequired().bind("firstName");
         userBinder.forField(lastName).bind("lastName");
-        userBinder.forField(emailAddress).asRequired().bind("emailAddress");
-
-        //! ENHANCEMENT: Look for alternative (non bcrypt) libraries to try?
-        password.setPlaceholder("Enter new password to change");
-        userBinder.forField(password).asRequired()
-            .bind(
-                user -> "",
-                (user, value) -> {
-                    if (!value.isEmpty()) {
-                        user.setPassword(value);
-                    }
-                }
-            );
-    
+        userBinder.forField(emailAddress).asRequired().bind("emailAddress");    
         userBinder.forField(userRole).asRequired().bind("userRole");
     }
 }

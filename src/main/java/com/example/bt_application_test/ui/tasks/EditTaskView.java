@@ -53,6 +53,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
     private Select<TaskStateEnum> taskState;
     private Select<User> createdBy;
     private Select<User> assignedTo;
+    private TextField shortDescription;
     private TextField description;
     private Span errorMessage;
     private Binder<Task> taskBinder;
@@ -78,6 +79,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
         taskState = getTaskStateField();
         createdBy = getUserSelect("Created By", userController, 0);
         assignedTo = getUserSelect("Assigned To", userController, 1);
+        shortDescription = new TextField("Short Description");
         description = new TextField("Description");
         errorMessage = new Span();
 
@@ -101,6 +103,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
 
         Button saveButton = new Button("Update");
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Button backButton = new Button("Back");
 
         //! Wrap the form title, form layout, and button in a new VerticalLayout
         VerticalLayout contentLayout = new VerticalLayout();
@@ -153,7 +156,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
         taskStateSelect.setLabel("State");
         taskStateSelect.setItems(TaskStateEnum.values());
         taskStateSelect.setRenderer(new TextRenderer<>(TaskStateEnum::getDisplayName));
-        taskStateSelect.setValue(TaskStateEnum.New);
+        taskStateSelect.setValue(TaskStateEnum.NEW);
         return taskStateSelect;
     }
 
@@ -201,7 +204,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
     }
 
     private void setupBinder() {
-        taskBinder.forField(createdDateTime).asRequired().bind("createdDateTime");
+        taskBinder.forField(createdDateTime).asRequired().bind("createdDateTime").setReadOnly(true);
         taskBinder.forField(taskState).asRequired().bind("state");
         taskBinder.forField(createdBy).asRequired()
             // .withConverter(
@@ -222,6 +225,7 @@ public class EditTaskView extends VerticalLayout implements BeforeEnterObserver 
             // )
             .bind("createdBy");
         taskBinder.forField(assignedTo).asRequired().bind("assignedTo");
-        taskBinder.forField(description).asRequired().bind("description");
+        taskBinder.forField(shortDescription).asRequired().bind("shortDescription");
+        taskBinder.forField(description).bind("description");
     }
 }

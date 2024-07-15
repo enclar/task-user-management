@@ -3,6 +3,9 @@ package com.example.bt_application_test.backend.data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.example.bt_application_test.backend.enums.TaskStateEnum;
 
 import jakarta.persistence.Column;
@@ -37,13 +40,18 @@ public class Task implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "assigned_to", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User assignedTo;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "short_description", nullable = false, columnDefinition = "VARCHAR(255)")
+    private String shortDescription;
+
+    @Column(name = "description", columnDefinition = "VARCHAR(510)")
     private String description;
 
     public Task() {
@@ -54,12 +62,14 @@ public class Task implements Serializable {
         TaskStateEnum state,
         User createdBy,
         User assignedTo,
+        String shortDescription,
         String description
     ) {
         this.createdDateTime = createdDateTime;
         this.state = state;
         this.createdBy = createdBy;
         this.assignedTo = assignedTo;
+        this.shortDescription = shortDescription;
         this.description = description;
     }
 }

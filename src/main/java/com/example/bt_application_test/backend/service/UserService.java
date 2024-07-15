@@ -38,7 +38,7 @@ public class UserService {
     }
 
     public void createOrUpdate(User user) {
-        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+        if (user.getId() == null && user.getPassword() != null && !user.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         userRepository.save(user);

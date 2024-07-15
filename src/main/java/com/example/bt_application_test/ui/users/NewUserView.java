@@ -2,6 +2,7 @@ package com.example.bt_application_test.ui.users;
 
 import com.example.bt_application_test.backend.controllers.UserController;
 import com.example.bt_application_test.backend.data.User;
+import com.example.bt_application_test.backend.enums.TaskStateEnum;
 import com.example.bt_application_test.backend.enums.UserRoleEnum;
 import com.example.bt_application_test.backend.service.UserService;
 import com.example.bt_application_test.ui.MainLayout;
@@ -21,6 +22,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -135,7 +137,8 @@ public class NewUserView extends VerticalLayout {
         Select<UserRoleEnum> userRoleSelect = new Select<>();
         userRoleSelect.setLabel("User Role");
         userRoleSelect.setItems(UserRoleEnum.values());
-        userRoleSelect.setValue(UserRoleEnum.User);
+        userRoleSelect.setRenderer(new TextRenderer<>(UserRoleEnum::getDisplayName));
+        userRoleSelect.setValue(UserRoleEnum.USER);
         return userRoleSelect;
     }
 }

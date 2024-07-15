@@ -19,6 +19,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.ValueProvider;
+import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
@@ -46,7 +47,7 @@ public class UsersView extends Div {
         addColumn(userGrid, User::getLastName, "Last Name");
         addColumn(userGrid, User::getEmailAddress, "Email Address");
         addColumn(userGrid, User::getPassword, "Password");
-        addColumn(userGrid, User::getUserRoles, "User Role");
+        addColumn(userGrid, User::getUserRole, "User Role");
         userGrid.addColumn(
             new ComponentRenderer<HorizontalLayout, User>(
                 HorizontalLayout::new,
@@ -83,7 +84,6 @@ public class UsersView extends Div {
 
         userGrid.setHeightFull();
         List<User> users = Lists.newArrayList(userController.findAllUsers());
-        log.info("UsersView.java", users);
         userGrid.setItems(users);
 
         add(userGrid);
@@ -94,6 +94,10 @@ public class UsersView extends Div {
         ValueProvider<User, T> colValue,
         String header
     ) {
-        userGrid.addColumn(colValue).setHeader(header).setResizable(true);
+        userGrid
+            .addColumn(colValue)
+            .setHeader(header)
+            .setResizable(true)
+            .setSortable(true);
     }
 }
