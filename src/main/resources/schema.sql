@@ -4,18 +4,20 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(100),
     email_address VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    user_role ENUM('User', 'Admin') NOT NULL
+    user_role ENUM('USER', 'ADMIN') NOT NULL
 )
 
 CREATE TABLE IF NOT EXISTS tasks (
     id CHAR(36) PRIMARY KEY,
     created_date_time TIMESTAMP NOT NULL,
-    task_state ENUM('New', 'InProgress', 'Closed', 'Canceled') NOT NULL,
+    task_state ENUM('NEW', 'IN_PROGRESS', 'CLOSED', 'CANCELED') NOT NULL,
 
     created_by CHAR(36) NOT NULL,
     FOREIGN KEY (created_by) REFERENCES users(id),
     
     assigned_to CHAR(36) NOT NULL,
     FOREIGN KEY (assigned_to) REFERENCES users(id),
-    description VARCHAR(500) NOT NULL
+
+    short_description VARCHAR(255) NOT NULL,
+    description VARCHAR(500)
 )
